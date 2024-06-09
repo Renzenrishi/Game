@@ -26,8 +26,11 @@ export const NameContainer = styled.div`
   margin-left: 20px;
 `
 export const H1 = styled.h1`
-  font-size: ${props => (props.count === 'true' ? '50px' : '')};
   margin-top: ${props => (props.count === 'true' ? '0px' : '')};
+`
+
+export const P = styled.p`
+  font-size: 25px;
   color: ${props => (props.result === 'true' ? 'white' : '')};
 `
 
@@ -42,6 +45,12 @@ export const ScoreBox = styled.div`
   height: 20vh;
   width: 15vw;
   margin-right: 20px;
+`
+
+export const Score = styled.p`
+  font-family: 'Roboto';
+  font-size: 50px;
+  margin-top: 0px;
 `
 
 export const Content = styled.div`
@@ -98,5 +107,14 @@ export const Div = styled.div`
 export const CloseBtn = styled.button`
   background-color: transparent;
   border-width: 0px;
+  cursor: pointer;
+`
+export const PlayAgain = styled.button`
+  background-color: white;
+  font-family: 'Bree serif';
+  border-width: 0px;
+  border-radius: 10px;
+  width: 140px;
+  height: 40px;
   cursor: pointer;
 `

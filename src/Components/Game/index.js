@@ -18,6 +18,9 @@ import {
   RulesContainer,
   Div,
   CloseBtn,
+  Score,
+  PlayAgain,
+  P,
 } from './styledComponent'
 
 const choicesList = [
@@ -47,8 +50,8 @@ const status = {
 class Game extends Component {
   state = {
     isClicked: false,
-    myChoice: choicesList[0].id,
-    opponentChoice: choicesList[1].id,
+    myChoice: '',
+    opponentChoice: '',
     score: 0,
     resultText: 'Game Start',
   }
@@ -56,31 +59,46 @@ class Game extends Component {
   setScore = () => {
     const {opponentChoice, myChoice} = this.state
 
-    if (
-      (myChoice === 'PAPER' && opponentChoice === 'ROCK') ||
-      (myChoice === 'SCISSORS' && opponentChoice === 'PAPER') ||
-      (myChoice === 'ROCK' && opponentChoice === 'SCISSORS')
-    ) {
+    console.log(myChoice)
+    console.log(opponentChoice)
+
+    if (myChoice === 'PAPER' && opponentChoice === 'ROCK') {
       this.setState(prevState => ({
         score: prevState.score + 1,
         resultText: status.won,
       }))
-    } else if (
-      (myChoice === 'SCISSORS' && opponentChoice === 'ROCK') ||
-      (myChoice === 'ROCK' && opponentChoice === 'PAPER') ||
-      (myChoice === 'PAPER' && opponentChoice === 'SCISSORS')
-    ) {
+    } else if (myChoice === 'SCISSORS' && opponentChoice === 'PAPER') {
+      this.setState(prevState => ({
+        score: prevState.score + 1,
+        resultText: status.won,
+      }))
+    } else if (myChoice === 'ROCK' && opponentChoice === 'SCISSORS') {
+      this.setState(prevState => ({
+        score: prevState.score + 1,
+        resultText: status.won,
+      }))
+    } else if (myChoice === 'ROCK' && opponentChoice === 'PAPER') {
       this.setState(prevState => ({
         score: prevState.score - 1,
         resultText: status.lose,
       }))
-    } else {
+    } else if (myChoice === 'SCISSORS' && opponentChoice === 'ROCK') {
+      this.setState(prevState => ({
+        score: prevState.score - 1,
+        resultText: status.lose,
+      }))
+    } else if (myChoice === 'PAPER' && opponentChoice === 'SCISSORS') {
+      this.setState(prevState => ({
+        score: prevState.score - 1,
+        resultText: status.lose,
+      }))
+    } else if (myChoice === opponentChoice) {
       this.setState({resultText: status.tie})
     }
   }
 
   changeIsClicked = id => {
-    const random = Math.ceil(Math.random() * 2)
+    const random = Math.floor(Math.random() * 2)
 
     const randomChoice = choicesList[random].id
 
@@ -100,27 +118,27 @@ class Game extends Component {
           data-testid="rockButton"
           onClick={() => this.changeIsClicked(choicesList[0].id)}
         >
-          <Image src={choicesList[0].imageUrl} alt="game" />
+          <Image src={choicesList[0].imageUrl} alt={choicesList[0].id} />
         </GameBtn>
         <GameBtn
           type="button"
           data-testid="scissorsButton"
           onClick={() => this.changeIsClicked(choicesList[1].id)}
         >
-          <Image src={choicesList[1].imageUrl} alt="game" />
+          <Image src={choicesList[1].imageUrl} alt={choicesList[1].id} />
         </GameBtn>
         <GameBtn
           type="button"
           data-testid="paperButton"
           onClick={() => this.changeIsClicked(choicesList[2].id)}
         >
-          <Image src={choicesList[2].imageUrl} alt="game" />
+          <Image src={choicesList[2].imageUrl} alt={choicesList[2].id} />
         </GameBtn>
       </ImageContainer>
     </Content>
   )
 
-  renderGameResults = () => {
+  renderGameResultView = () => {
     const {myChoice, opponentChoice, resultText} = this.state
 
     const mc = choicesList.filter(each => each.id === myChoice)
@@ -130,18 +148,18 @@ class Game extends Component {
       <Content>
         <ImageContainer>
           <Div>
-            <H1>Your Choice</H1>
+            <H1>YOU</H1>
             <Image src={mc[0].imageUrl} alt="your choice" />
           </Div>
           <Div>
-            <H1>Opponent Choice</H1>
-            <Image src={oc[0].imageUrl} alt="your choice" />
+            <H1>OPPONENT</H1>
+            <Image src={oc[0].imageUrl} alt="opponent choice" />
           </Div>
         </ImageContainer>
-        <H1 result="true">{resultText}</H1>
-        <RulesBtn type="button" onClick={this.changeIsClicked}>
-          Play Again
-        </RulesBtn>
+        <P result="true">{resultText}</P>
+        <PlayAgain type="button" onClick={this.changeIsClicked}>
+          PLAY AGAIN
+        </PlayAgain>
       </Content>
     )
   }
@@ -153,16 +171,16 @@ class Game extends Component {
       <GameContainer>
         <ScoreContainer>
           <NameContainer>
-            <H1>Rock</H1>
-            <H1>PAPER</H1>
-            <H1>SCISSORS</H1>
+            <H1>Rock Paper Scissors</H1>
           </NameContainer>
           <ScoreBox>
-            <H1>Score</H1>
-            <H1 count="true">{score}</H1>
+            <P>Score</P>
+            <Score>{score}</Score>
           </ScoreBox>
         </ScoreContainer>
-        {isClicked ? this.renderGameResults() : this.renderRockPaperScissors()}
+        {isClicked
+          ? this.renderGameResultView()
+          : this.renderRockPaperScissors()}
         <Popup modal trigger={<RulesBtn type="button">Rules</RulesBtn>}>
           {close => (
             <RulesContainer>

@@ -59,9 +59,6 @@ class Game extends Component {
   setScore = () => {
     const {opponentChoice, myChoice} = this.state
 
-    console.log(myChoice)
-    console.log(opponentChoice)
-
     if (myChoice === 'PAPER' && opponentChoice === 'ROCK') {
       this.setState(prevState => ({
         score: prevState.score + 1,

@@ -85,3 +85,16 @@ export const RulesContainer = styled.div`
   background-color: white;
   padding: 30px;
 `
+
+export const ResultContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const Div = styled.div`
+display : flex,
+flex-direction : column;
+justify-content: center;
+align-items : center;
+color : white;
+`

@@ -80,6 +80,7 @@ export const RulesBtn = styled.button`
   width: 100px;
   height: 35px;
   cursor: pointer;
+  margin-left: auto;
 `
 export const RulesContainer = styled.div`
   background-color: white;
@@ -92,4 +93,10 @@ export const Div = styled.div`
   justify-content: center;
   align-items: center;
   color: white;
+`
+
+export const CloseBtn = styled.button`
+  background-color: transparent;
+  border-width: 0px;
+  cursor: pointer;
 `

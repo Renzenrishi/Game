@@ -2,6 +2,8 @@ import {Component} from 'react'
 
 import Popup from 'reactjs-popup'
 
+import {RiCloseLine} from 'react-icons/ri'
+
 import {
   GameContainer,
   ScoreContainer,
@@ -15,6 +17,7 @@ import {
   RulesBtn,
   RulesContainer,
   Div,
+  CloseBtn,
 } from './styledComponent'
 
 const choicesList = [
@@ -35,6 +38,12 @@ const choicesList = [
   },
 ]
 
+const status = {
+  won: 'YOU WON',
+  lose: 'YOU LOSE',
+  tie: 'IT IS DRAW',
+}
+
 class Game extends Component {
   state = {
     isClicked: false,
@@ -45,7 +54,29 @@ class Game extends Component {
   }
 
   setScore = () => {
-    this.setScore({score: 1})
+    const {opponentChoice, myChoice} = this.state
+
+    if (
+      (myChoice === 'PAPER' && opponentChoice === 'ROCK') ||
+      (myChoice === 'SCISSORS' && opponentChoice === 'PAPER') ||
+      (myChoice === 'ROCK' && opponentChoice === 'SCISSORS')
+    ) {
+      this.setState(prevState => ({
+        score: prevState.score + 1,
+        resultText: status.won,
+      }))
+    } else if (
+      (myChoice === 'SCISSORS' && opponentChoice === 'ROCK') ||
+      (myChoice === 'ROCK' && opponentChoice === 'PAPER') ||
+      (myChoice === 'PAPER' && opponentChoice === 'SCISSORS')
+    ) {
+      this.setState(prevState => ({
+        score: prevState.score - 1,
+        resultText: status.lose,
+      }))
+    } else {
+      this.setState({resultText: status.tie})
+    }
   }
 
   changeIsClicked = id => {
@@ -133,13 +164,19 @@ class Game extends Component {
         </ScoreContainer>
         {isClicked ? this.renderGameResults() : this.renderRockPaperScissors()}
         <Popup modal trigger={<RulesBtn type="button">Rules</RulesBtn>}>
-          <RulesContainer>
-            <Image
-              rules="true"
-              src="https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rules-image.png"
-              alt="rules"
-            />
-          </RulesContainer>
+          {close => (
+            <RulesContainer>
+              {/* eslint-disable-next-line */}
+              <CloseBtn type="button" onClick={() => close()}>
+                <RiCloseLine />
+              </CloseBtn>
+              <Image
+                rules="true"
+                src="https://assets.ccbp.in/frontend/react-js/rock-paper-scissor/rules-image.png"
+                alt="rules"
+              />
+            </RulesContainer>
+          )}
         </Popup>
       </GameContainer>
     )

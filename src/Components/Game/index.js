@@ -98,16 +98,18 @@ class Game extends Component {
   }
 
   changeIsClicked = id => {
-    const random = Math.floor(Math.random() * 2)
+    const random = Math.floor(Math.random() * 3)
 
     const randomChoice = choicesList[random].id
 
-    this.setState(prevState => ({
-      isClicked: !prevState.isClicked,
-      myChoice: id,
-      opponentChoice: randomChoice,
-    }))
-    this.setScore()
+    this.setState(
+      {
+        isClicked: true,
+        myChoice: id,
+        opponentChoice: randomChoice,
+      },
+      this.setScore,
+    )
   }
 
   renderRockPaperScissors = () => (
@@ -157,7 +159,10 @@ class Game extends Component {
           </Div>
         </ImageContainer>
         <P result="true">{resultText}</P>
-        <PlayAgain type="button" onClick={this.changeIsClicked}>
+        <PlayAgain
+          type="button"
+          onClick={() => this.setState({isClicked: false})}
+        >
           PLAY AGAIN
         </PlayAgain>
       </Content>

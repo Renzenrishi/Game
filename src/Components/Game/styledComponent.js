@@ -5,7 +5,6 @@ export const GameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: flex-start
   height: 100vh;
   padding: 10px;
 `
@@ -29,6 +28,7 @@ export const NameContainer = styled.div`
 export const H1 = styled.h1`
   font-size: ${props => (props.count === 'true' ? '50px' : '')};
   margin-top: ${props => (props.count === 'true' ? '0px' : '')};
+  color: ${props => (props.result === 'true' ? 'white' : '')};
 `
 
 export const ScoreBox = styled.div`
@@ -57,8 +57,8 @@ export const ImageContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  width: 35vw;
-  margin-top: 9px;
+  width: 45vw;
+  margin-top: 15px;
 `
 
 export const GameBtn = styled.button`
@@ -68,7 +68,7 @@ export const GameBtn = styled.button`
 `
 
 export const Image = styled.img`
-  height: ${props => (props.rules === 'true' ? '70vh' : '30vh')};
+  height: ${props => (props.rules === 'true' ? '75vh' : '30vh')};
   width: ${props => (props.rules === 'true' ? '' : '15vw')};
 `
 
@@ -86,15 +86,10 @@ export const RulesContainer = styled.div`
   padding: 30px;
 `
 
-export const ResultContainer = styled.div`
-  display: flex;
-  align-items: center;
-`
-
 export const Div = styled.div`
-display : flex,
-flex-direction : column;
-justify-content: center;
-align-items : center;
-color : white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
 `

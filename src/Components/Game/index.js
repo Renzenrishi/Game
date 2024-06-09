@@ -14,7 +14,6 @@ import {
   Image,
   RulesBtn,
   RulesContainer,
-  ResultContainer,
   Div,
 } from './styledComponent'
 
@@ -41,6 +40,12 @@ class Game extends Component {
     isClicked: false,
     myChoice: choicesList[0].id,
     opponentChoice: choicesList[1].id,
+    score: 0,
+    resultText: 'Game Start',
+  }
+
+  setScore = () => {
+    this.setScore({score: 1})
   }
 
   changeIsClicked = id => {
@@ -53,6 +58,7 @@ class Game extends Component {
       myChoice: id,
       opponentChoice: randomChoice,
     }))
+    this.setScore()
   }
 
   renderRockPaperScissors = () => (
@@ -84,15 +90,14 @@ class Game extends Component {
   )
 
   renderGameResults = () => {
-    const {myChoice, opponentChoice} = this.state
+    const {myChoice, opponentChoice, resultText} = this.state
 
     const mc = choicesList.filter(each => each.id === myChoice)
-
     const oc = choicesList.filter(each => each.id === opponentChoice)
 
     return (
       <Content>
-        <ResultContainer>
+        <ImageContainer>
           <Div>
             <H1>Your Choice</H1>
             <Image src={mc[0].imageUrl} alt="your choice" />
@@ -101,8 +106,8 @@ class Game extends Component {
             <H1>Opponent Choice</H1>
             <Image src={oc[0].imageUrl} alt="your choice" />
           </Div>
-        </ResultContainer>
-        <H1>YOU WON</H1>
+        </ImageContainer>
+        <H1 result="true">{resultText}</H1>
         <RulesBtn type="button" onClick={this.changeIsClicked}>
           Play Again
         </RulesBtn>
@@ -111,11 +116,8 @@ class Game extends Component {
   }
 
   render() {
-    const {isClicked, myChoice, opponentChoice} = this.state
+    const {isClicked, score} = this.state
 
-    console.log(isClicked)
-    console.log(myChoice)
-    console.log(opponentChoice)
     return (
       <GameContainer>
         <ScoreContainer>
@@ -126,7 +128,7 @@ class Game extends Component {
           </NameContainer>
           <ScoreBox>
             <H1>Score</H1>
-            <H1 count="true">0</H1>
+            <H1 count="true">{score}</H1>
           </ScoreBox>
         </ScoreContainer>
         {isClicked ? this.renderGameResults() : this.renderRockPaperScissors()}
